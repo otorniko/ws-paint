@@ -7,13 +7,14 @@ import {
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   import React from "react";
   import { BrushPreview } from "./BrushPreview";
+  import { useSelector } from "react-redux";
   
   export const Toolbar = ({
     currentWidth,
     currentColor,
     handleDownload,
     dateUrl,
-    handleClear,
+    clearCanvas,
     handleSpecialMode,
     handleEraserMode,
     setAutoWidth,
@@ -26,16 +27,19 @@ import {
     isAutoWidth,
     isEraser,
   }) => {
+    const user = useSelector((state) => state.socket.user);
     return (
       <aside>
         <div>
           <BrushPreview currentWidth={currentWidth} currentColor={currentColor} />
+          <h2>{user}</h2>
           <div className="tool-section tool-section--lrg">
             <div className="tool-section">
               <small>
                 <strong>Brush color</strong>
               </small>
             </div>
+
             <input
               disabled={!isRegularMode}
               className="btn--color"
@@ -108,7 +112,7 @@ import {
               </div>
               <div className="tool-section">
                 <input
-                  defaultValue="50"
+                  defaultValue="10"
                   type="range"
                   min="10"
                   max="90"
@@ -158,7 +162,7 @@ import {
           >
             Save Image
           </a>
-          <button className="btn btn--block" onClick={handleClear}>
+          <button className="btn btn--block" onClick={clearCanvas}>
             Clear
           </button>
         </div>
